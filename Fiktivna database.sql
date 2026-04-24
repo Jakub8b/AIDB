@@ -220,7 +220,7 @@ WITH sampled AS (
 SELECT *
 FROM sampled)
 
--- Zobrazí mi koľko krát sa unikátne meno nachádza vo view PowerBi (jeto dataset zakaznikov za dobu 3 rokov- velké číslo vysledkov je v poriadku)
+-- Zobrazí mi koľko krát sa unikátne meno nachádza vo view PowerBi (jeto dataset zakaznikov za dobu 3 rokov- vela vysledkov je v poriadku)
 with names as (
 select
 customer_id,
@@ -499,6 +499,60 @@ SELECT *
 FROM ranked
 WHERE rn_unique = 1) -- Zobrazi mi iba partition by obe kategorie kde su duplicity, priradí im všetkým poradové číslo, random ich zamieša a zobrazí mi iba rn_unique (prvý riadok) ! 
 -- asi najlepšie možné riešenie pri redukcii duplicitných hodnot vytvorenej fiktivnej database
+
+with cte as (
+select distinct
+order_date,
+count(*) over (partition by order_date) as n_orders
+from powerbi_projekt
+order by count(*) over (partition by order_date) desc)
+select*,
+dense_rank() over (order by n_orders desc) as rank
+from cte
+
+with cte as (
+select distinct
+product_id,
+product_name,
+price,
+order_date
+from powerbi_projekt
+order by product_id), lol as (
+select*,
+dense_rank() over (partition by product_name order by price)
+from cte) select distinct 
+date_part('year', order_date) as year,
+product_id,
+product_name,
+price
+from lol
+order by product_name, price
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
