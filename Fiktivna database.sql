@@ -220,7 +220,7 @@ WITH sampled AS (
 SELECT *
 FROM sampled)
 
--- Zobrazí mi koľko krát sa unikátne meno nachádza vo view PowerBi (jeto dataset zakaznikov za dobu 3 rokov- vela vysledkov je v poriadku)
+-- Zobrazí mi koľko krát sa unikátne meno nachádza vo view PowerBi (jeto dataset zakaznikov za dobu 3 rokov- velké číslo vysledkov je v poriadku)
 with names as (
 select
 customer_id,
