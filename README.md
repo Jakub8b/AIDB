@@ -337,7 +337,6 @@ COUNT(*) OVER (PARTITION BY A)
 
 ## 📄 License
 
-[Specify your license - MIT, GPL, CC0, etc.]
 
 ---
 
